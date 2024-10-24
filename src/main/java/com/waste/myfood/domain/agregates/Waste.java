@@ -1,7 +1,14 @@
 package com.waste.myfood.domain.agregates;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
+import java.util.List;
+
+import com.waste.myfood.domain.constants.CauseWasteConstants;
+import com.waste.myfood.domain.value_objects.CauseWaste;
+import com.waste.myfood.domain.value_objects.QuantityWaste;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
