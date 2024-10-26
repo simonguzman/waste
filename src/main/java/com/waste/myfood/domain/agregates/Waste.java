@@ -3,11 +3,12 @@ package com.waste.myfood.domain.agregates;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
 
 import com.waste.myfood.domain.constants.CauseWasteConstants;
 import com.waste.myfood.domain.value_objects.CauseWaste;
+import com.waste.myfood.domain.value_objects.ProductWaste;
 import com.waste.myfood.domain.value_objects.QuantityWaste;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +22,9 @@ public class Waste {
     private QuantityWaste quantityWaste;
     private CauseWaste cause;
     private Date dateRegister; 
-    private List<Product> productsWaste;
+    private List<ProductWaste> productsWaste;
 
-    public Waste(Product product, double initialQuantityWaste, CauseWaste cause){
+    public Waste(ProductWaste product, double initialQuantityWaste, CauseWaste cause){
         this.idWaste = UUID.randomUUID().toString();
         this.productId = product.getId();
         this.quantityWaste = new QuantityWaste(initialQuantityWaste);
