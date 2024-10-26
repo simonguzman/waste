@@ -1,6 +1,5 @@
 package com.waste.myfood.domain.agregates;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Waste {
     private String idWaste;
-    private String productId;
+    private ProductWaste product;
     private QuantityWaste quantityWaste;
     private CauseWaste cause;
     private Date dateRegister; 
@@ -26,7 +25,7 @@ public class Waste {
 
     public Waste(ProductWaste product, double initialQuantityWaste, CauseWaste cause){
         this.idWaste = UUID.randomUUID().toString();
-        this.productId = product.getId();
+        this.product = product;
         this.quantityWaste = new QuantityWaste(initialQuantityWaste);
         this.cause = cause;
         this.dateRegister = new Date();
@@ -35,7 +34,7 @@ public class Waste {
 
     public Waste() {
         this.idWaste = UUID.randomUUID().toString();  
-        this.productId = "";  
+        this.product = new ProductWaste("", "", 0.0);  
         this.quantityWaste = new QuantityWaste(0);  
         this.cause = new CauseWaste();  
         this.dateRegister = new Date();  

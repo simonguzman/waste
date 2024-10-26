@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -32,8 +33,9 @@ public class WasteEntity {
     @Column(name = "idWaste", updatable = false, nullable = false)
     private String idWaste;
 
-    @Column(name = "productId", nullable = false, length = 50)
-    private String productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductWasteEntity product;
 
     @Column(name = "quantityWaste", nullable = false)
     private double quantityWaste;
