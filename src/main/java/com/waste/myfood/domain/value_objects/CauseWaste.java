@@ -24,7 +24,7 @@ public class CauseWaste {
      * @param causeIndex El índice que representa la causa de desperdicio.
      * @return La descripción de la causa correspondiente al índice.
      */
-    private String selectCause(int causeIndex) {
+    public String selectCause(int causeIndex) {
         return switch (causeIndex) {
             case 1 -> CauseWasteConstants.CAUSE_WASTE_EXPIRED;
             case 2 -> CauseWasteConstants.CAUSE_WASTE_EXCESS_PREPARATION;
