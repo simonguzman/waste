@@ -23,7 +23,6 @@ public class Waste {
     private QuantityWaste quantityWaste;
     private CauseWaste cause;
     private Date dateRegister; 
-    private List<ProductWaste> productsWaste;
 
     public Waste(ProductWaste product, double initialQuantityWaste, CauseWaste cause){
         this.idWaste = UUID.randomUUID().toString();
@@ -31,7 +30,6 @@ public class Waste {
         this.quantityWaste = new QuantityWaste(initialQuantityWaste);
         this.cause = cause;
         this.dateRegister = new Date();
-        this.productsWaste = new ArrayList<>();
     }
 
     public Waste() {
@@ -40,7 +38,6 @@ public class Waste {
         this.quantityWaste = new QuantityWaste(0);  
         this.cause = new CauseWaste();  
         this.dateRegister = new Date();  
-        this.productsWaste = new ArrayList<>();  
     }
 
    /**
