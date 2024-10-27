@@ -80,4 +80,16 @@ public class Waste {
 
         return suggestions.toString();
     }
+
+    public boolean isValidQuantity(){
+        return this.quantityWaste.getTotalWasteQuantity() > 0;
+    }
+
+    public boolean isValidProduct(){
+        return this.product != null && this.product.getId() != null && !this.product.getId().isBlank();
+    }
+
+    public boolean isValidCause(){
+        return this.cause != null && CauseWasteConstants.CAUSE_SUGGESTIONS.containsKey(this.cause.getDescription());
+    }
 }
