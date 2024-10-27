@@ -1,4 +1,4 @@
-package com.waste.myfood.domain.services;
+package com.waste.myfood.domain.use_cases;
 
 import java.util.List;
 
