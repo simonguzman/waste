@@ -11,9 +11,11 @@ import com.waste.myfood.domain.value_objects.ProductWaste;
 import com.waste.myfood.domain.value_objects.QuantityWaste;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
 @AllArgsConstructor
 public class Waste {
     private String idWaste;

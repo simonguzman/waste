@@ -54,9 +54,9 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
         return mapper.map(wasteEntities, new TypeToken<List<Waste>>() {}.getType());
     }
 
-    @Override
-    public double calculateTotalWasteByProductId(String productId) {
-        return serviceDB.calculateTotalWasteByProduct_Id(productId);
-    }
+    //@Override
+    //public double calculateTotalWasteByProductId(String productId) {
+    //    return serviceDB.calculateTotalWasteByProduct_Id(productId);
+    //}*/
     
 }

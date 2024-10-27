@@ -12,5 +12,5 @@ public interface WasteRepository extends JpaRepository<WasteEntity, String> {
 
     List<WasteEntity> findAllByCause(String cause);
 
-    double calculateTotalWasteByProduct_Id(String productId);
+    //double calculateTotalWasteByProduct_Id(String productId);
 }

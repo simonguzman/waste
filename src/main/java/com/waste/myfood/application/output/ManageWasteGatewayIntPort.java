@@ -58,5 +58,5 @@ public interface ManageWasteGatewayIntPort {
      * @return {@code double} La cantidad total de desperdicio registrada para el producto especificado. 
      *         Si no hay desperdicio registrado, se devuelve 0.
      */
-    double calculateTotalWasteByProductId(String productId);
+    //double calculateTotalWasteByProductId(String productId);
 }
