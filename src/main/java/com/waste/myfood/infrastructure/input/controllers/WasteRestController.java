@@ -24,7 +24,7 @@ import com.waste.myfood.application.input.ManageWasteCUIntPort;
 import com.waste.myfood.domain.agregates.Waste;
 import com.waste.myfood.infrastructure.input.dto.request.WasteDTORequest;
 import com.waste.myfood.infrastructure.input.dto.response.WasteDTOResponse;
-import com.waste.myfood.infrastructure.input.mappers.MapperProductInfraestructureDomain;
+import com.waste.myfood.infrastructure.input.mappers.MapperWasteInfraestructureDomain;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +36,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WasteRestController {
     private final ManageWasteCUIntPort domain;
-    private final MapperProductInfraestructureDomain mapper;
+    private final MapperWasteInfraestructureDomain mapper;
     
     @PostMapping("")
     public ResponseEntity<?> createWaste(@Valid @RequestBody WasteDTORequest request, BindingResult errors) {

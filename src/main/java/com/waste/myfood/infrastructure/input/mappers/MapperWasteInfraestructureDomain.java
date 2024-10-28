@@ -14,7 +14,7 @@ import com.waste.myfood.infrastructure.input.dto.response.WasteDTOResponse;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class MapperProductInfraestructureDomain {
+public class MapperWasteInfraestructureDomain {
     public final ExceptionFormatterIntPort formatter;
 
     public Waste infrastructureToDomain(WasteDTORequest request){

@@ -38,8 +38,8 @@ public class WasteEntity {
     private QuantityWasteEntity quantityWaste;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "causeWaste_id", nullable = false, length = 100)
-    private String cause;
+    @JoinColumn(name = "causeWaste_id", nullable = false)
+    private CauseWasteEntity causeWaste;
 
     @Column(name = "dateRegister", nullable = false)
     @Temporal(TemporalType.DATE)
