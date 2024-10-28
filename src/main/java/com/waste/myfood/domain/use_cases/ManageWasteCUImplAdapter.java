@@ -12,9 +12,9 @@ public class ManageWasteCUImplAdapter implements ManageWasteCUIntPort {
     private final ManageWasteGatewayIntPort gateway;
     private final ExceptionFormatterIntPort formatter;
     
-    public ManageWasteCUImplAdapter(ManageWasteGatewayIntPort gateway, ExceptionFormatterIntPort formater){
+    public ManageWasteCUImplAdapter(ManageWasteGatewayIntPort gateway, ExceptionFormatterIntPort formatter){
         this.gateway = gateway;
-        this.formatter = formater;
+        this.formatter = formatter;
     }
 
 
