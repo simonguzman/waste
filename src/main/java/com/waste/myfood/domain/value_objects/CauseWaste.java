@@ -17,7 +17,7 @@ public class CauseWaste {
 
     public CauseWaste(int causeIndex){
         this.id = UUID.randomUUID().toString();
-        this.description = selectCause(causeIndex);
+        this.description = this.selectCause(causeIndex);
     }
 
     /**

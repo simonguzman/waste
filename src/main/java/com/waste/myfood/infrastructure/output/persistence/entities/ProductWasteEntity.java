@@ -1,5 +1,7 @@
 package com.waste.myfood.infrastructure.output.persistence.entities;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ public class ProductWasteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id",updatable = false, nullable = false)
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(unique = true, name = "name", nullable = false, length = 50)
     private String name;

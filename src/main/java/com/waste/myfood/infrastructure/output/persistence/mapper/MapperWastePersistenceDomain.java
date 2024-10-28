@@ -36,13 +36,13 @@ public class MapperWastePersistenceDomain {
         );
 
         QuantityWasteEntity quantityEntity = new QuantityWasteEntity(
-            null, // ID se generará automáticamente
+            null,
             domain.getQuantityWaste().getTotalWasteQuantity(),
             domain.getQuantityWaste().getTotalWasteQuantity()
         );
 
         CauseWasteEntity causeEntity = new CauseWasteEntity(
-            null, // ID se generará automáticamente
+            null,
             domain.getCause().getDescription()
         );
 

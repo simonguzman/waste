@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.waste.myfood.application.output.ManageWasteGatewayIntPort;
 import com.waste.myfood.domain.agregates.Waste;
+import com.waste.myfood.infrastructure.output.persistence.entities.CauseWasteEntity;
 import com.waste.myfood.infrastructure.output.persistence.entities.WasteEntity;
 import com.waste.myfood.infrastructure.output.persistence.repositories.WasteRepository;
 

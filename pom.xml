@@ -8,10 +8,10 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.waste</groupId>
-	<artifactId>myfoodwaste</artifactId>
+	<groupId>com.unicauca</groupId>
+	<artifactId>my-food-waste</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>myfood</name>
+	<name>my-food-waste</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

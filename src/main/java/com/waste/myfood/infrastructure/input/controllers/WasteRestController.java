@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 
-@CrossOrigin(origins = {"http://localhost:5050"})
+@CrossOrigin(origins = {"http://localhost:8080"})
 @RestController
 @RequestMapping("/api/v1/wastes")
 @AllArgsConstructor
@@ -44,6 +44,11 @@ public class WasteRestController {
         if (!errorResponse.isEmpty())
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         
+        if (request.getCause() == null) {
+            errorResponse.put("mensaje", "Cause can't be null.");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
         Waste waste = this.mapper.infrastructureToDomain(request);
         Waste createdWaste = this.domain.createWaste(waste);
         
