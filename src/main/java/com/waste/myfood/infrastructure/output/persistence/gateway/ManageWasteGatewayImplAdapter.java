@@ -44,13 +44,13 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
 
     @Override
     public List<Waste> findByProductId(String productId) {
-        List<WasteEntity> wasteEntities = serviceDB.findAllByProductId(productId);
+        List<WasteEntity> wasteEntities = serviceDB.findAllByProduct_Id(productId);
         return mapper.map(wasteEntities, new TypeToken<List<Waste>>() {}.getType());
     }
 
     @Override
     public List<Waste> findByCause(String cause) {
-        List<WasteEntity> wasteEntities = serviceDB.findAllByCause(cause);
+        List<WasteEntity> wasteEntities = serviceDB.findAllByCauseWaste_Description(cause);
         return mapper.map(wasteEntities, new TypeToken<List<Waste>>() {}.getType());
     }
 

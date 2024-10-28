@@ -8,9 +8,8 @@ import com.waste.myfood.infrastructure.output.persistence.entities.WasteEntity;
 
 public interface WasteRepository extends JpaRepository<WasteEntity, String> {
     
-    List<WasteEntity> findAllByProductId(String productId);
+    List<WasteEntity> findAllByProduct_Id(String productId);
 
-    List<WasteEntity> findAllByCause(String cause);
-
+    List<WasteEntity> findAllByCauseWaste_Description(String description);
     //double calculateTotalWasteByProduct_Id(String productId);
 }
