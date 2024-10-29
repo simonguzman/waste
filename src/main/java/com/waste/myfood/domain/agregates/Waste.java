@@ -39,10 +39,15 @@ public class Waste {
      * @throws IllegalArgumentException Si la cantidad es negativa o cero.
      */
     public void registerWaste(double quantity) {
-        if (quantity > 0)
-            this.quantityWaste.addQuantity(quantity);
-        else
+        if (quantity <= 0) {
             throw new IllegalArgumentException("La cantidad de desperdicio debe ser positiva.");
+        }
+        
+        if (this.quantityWaste == null) {
+            this.quantityWaste = new QuantityWaste(quantity);
+        } else {
+            this.quantityWaste.addQuantity(quantity);
+        }
     }
 
     /**
@@ -80,5 +85,38 @@ public class Waste {
 
     public boolean isValidCause(){
         return this.cause != null && CauseWasteConstants.CAUSE_SUGGESTIONS.containsKey(this.cause.getDescription());
+    }
+
+    public void updateProduct(ProductWaste newProduct) {
+        if (newProduct != null) {
+            this.product = new ProductWaste(
+                newProduct.getName(),
+                newProduct.getCategory(),
+                newProduct.getStock()
+            );
+        }
+    }
+
+    public void updateQuantityWaste(QuantityWaste newQuantity) {
+        if (newQuantity != null) {
+            this.quantityWaste = new QuantityWaste(
+                newQuantity.getTotalWasteQuantity()
+            );
+        }
+    }
+
+    public void updateCause(CauseWaste newCause) {
+        if (newCause != null) {
+            this.cause = new CauseWaste(
+                this.cause.getId(),
+                newCause.getDescription()
+            );
+        }
+    }
+
+    public void updateDateRegister(Date newDate) {
+        if (newDate != null) {
+            this.dateRegister = newDate;
+        }
     }
 }

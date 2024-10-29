@@ -3,6 +3,7 @@ package com.waste.myfood.infrastructure.configuration;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.waste.myfood.application.output.ExceptionFormatterIntPort;
 import com.waste.myfood.application.output.ManageWasteGatewayIntPort;

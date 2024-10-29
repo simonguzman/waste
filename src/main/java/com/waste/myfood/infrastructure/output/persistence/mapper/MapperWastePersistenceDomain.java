@@ -22,10 +22,19 @@ public class MapperWastePersistenceDomain {
     public final ExceptionFormatterIntPort formatter;
 
     public Waste persistenceToDomain(WasteEntity entity) {
-        ProductWaste product = new ProductWaste(entity.getProduct().getId(), entity.getProduct().getName(), entity.getProduct().getStock());
-        QuantityWaste quantityWaste = new QuantityWaste(entity.getQuantityWaste().getWasteQuantity());
-        CauseWaste cause = new CauseWaste(entity.getCauseWaste().getIdCauseWaste(),entity.getCauseWaste().getDescription());
-        return new Waste(entity.getIdWaste(), product, quantityWaste, cause, entity.getDateRegister());
+        ProductWaste product = new ProductWaste(
+        entity.getProduct().getName(),
+        entity.getProduct().getCategory(),
+        entity.getProduct().getStock()
+    );
+    QuantityWaste quantityWaste = new QuantityWaste(
+        entity.getQuantityWaste().getWasteQuantity()
+    );
+    CauseWaste cause = new CauseWaste(
+        entity.getCauseWaste().getIdCauseWaste(),
+        entity.getCauseWaste().getDescription()
+    );
+    return new Waste(entity.getIdWaste(), product, quantityWaste, cause, entity.getDateRegister());
     }
 
     public WasteEntity domainToPersistence(Waste domain) {

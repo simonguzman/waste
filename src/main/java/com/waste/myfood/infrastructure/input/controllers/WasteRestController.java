@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -49,14 +50,18 @@ public class WasteRestController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
         
+        if (request.getProduct() == null || request.getProduct().getId() == null || request.getProduct().getId().isEmpty()) {
+            errorResponse.put("mensaje", "Product cannot be null.");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
         Waste waste = this.mapper.infrastructureToDomain(request);
         Waste createdWaste = this.domain.createWaste(waste);
         
         if (createdWaste == null) {
-            errorResponse.put("mensaje", "Error creating waste");
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to create waste. Please check the product details.", HttpStatus.BAD_REQUEST);
         }
-        
+
         WasteDTOResponse response = this.mapper.domainToInfrastructure(createdWaste);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -80,18 +85,19 @@ public class WasteRestController {
 
     @PatchMapping("/identifier/{wasteId}/quantity/{quantity}")
     public ResponseEntity<?> registerAdditionalWaste(
-            @Valid @NotBlank(message = "The identifier can't be empty.") @PathVariable String wasteId,
-            @Valid @PathVariable double quantity,
-            BindingResult errors) {
-        Map<String, Object> errorResponse = catchErrors(errors);
-        if (!errorResponse.isEmpty())
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        
+        @PathVariable String wasteId,
+        @PathVariable double quantity) {
         try {
             Waste updatedWaste = this.domain.registerAdditionalWaste(wasteId, quantity);
+            if (updatedWaste == null) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("mensaje", "No se pudo actualizar el registro de desperdicio");
+                return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+            }
             WasteDTOResponse response = this.mapper.domainToInfrastructure(updatedWaste);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("mensaje", "Error registering additional waste: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -144,6 +150,9 @@ public class WasteRestController {
     public ResponseEntity<?> getWasteByProductId(@PathVariable String productId) {
         try {
             List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByProductId(productId));
+            if (response.isEmpty()) {
+                return new ResponseEntity<>("No se encontraron desperdicios para el producto con ID: " + productId, HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();

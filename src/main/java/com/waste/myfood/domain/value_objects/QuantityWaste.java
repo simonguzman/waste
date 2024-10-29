@@ -3,18 +3,14 @@ package com.waste.myfood.domain.value_objects;
 import java.util.UUID;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class QuantityWaste {
     private String id;
     private double wasteQuantity;
     private double totalWasteQuantity;
-
-    public QuantityWaste() {
-        this.id = UUID.randomUUID().toString();  
-        this.wasteQuantity = 0.0;  
-        this.totalWasteQuantity = 0.0; 
-    }
 
     public QuantityWaste(double wasteQuantity) {
         this.id = UUID.randomUUID().toString();
@@ -31,6 +27,7 @@ public class QuantityWaste {
     public boolean addQuantity(double quantity) {
         if (quantity <= 0)
             return false;
+        this.wasteQuantity += quantity;
         this.totalWasteQuantity += quantity;
         return true;
     }
