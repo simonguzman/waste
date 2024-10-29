@@ -67,16 +67,15 @@ public class WasteRestController {
         if (!errorResponse.isEmpty())
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         
-        Waste waste = this.mapper.infrastructureToDomain(request);
-        Waste updatedWaste = this.domain.update(waste);
-        
-        if (updatedWaste == null) {
-            errorResponse.put("mensaje", "Error updating waste");
+        try {
+            Waste waste = this.mapper.infrastructureToDomain(request);
+            Waste updatedWaste = this.domain.update(waste);
+            WasteDTOResponse response = this.mapper.domainToInfrastructure(updatedWaste);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            errorResponse.put("mensaje", "Error updating waste: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        WasteDTOResponse response = this.mapper.domainToInfrastructure(updatedWaste);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/identifier/{wasteId}/quantity/{quantity}")
@@ -88,15 +87,14 @@ public class WasteRestController {
         if (!errorResponse.isEmpty())
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         
-        Waste updatedWaste = this.domain.registerAdditionalWaste(wasteId, quantity);
-        
-        if (updatedWaste == null) {
-            errorResponse.put("mensaje", "Error registering additional waste");
+        try {
+            Waste updatedWaste = this.domain.registerAdditionalWaste(wasteId, quantity);
+            WasteDTOResponse response = this.mapper.domainToInfrastructure(updatedWaste);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            errorResponse.put("mensaje", "Error registering additional waste: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        WasteDTOResponse response = this.mapper.domainToInfrastructure(updatedWaste);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/")
@@ -106,47 +104,76 @@ public class WasteRestController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (DataAccessException e) {
             Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("mensaje", "Error retrieving wastes");
-            errorResponse.put("error", e.getMessage());
+            errorResponse.put("mensaje", "Error retrieving wastes: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/cause/{cause}")
     public ResponseEntity<?> getWasteByCause(@PathVariable String cause) {
-        List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByCause(cause));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByCause(cause));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensaje", "Error retrieving wastes by cause: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/identifier/{wasteId}")
     public ResponseEntity<?> getWasteById(@PathVariable String wasteId) {
-        Waste waste = this.domain.getWasteById(wasteId);
-        if (waste == null) {
+        try {
+            Waste waste = this.domain.getWasteById(wasteId);
+            if (waste == null) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("mensaje", "Waste not found");
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            }
+            
+            WasteDTOResponse response = this.mapper.domainToInfrastructure(waste);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("mensaje", "Waste not found");
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            errorResponse.put("mensaje", "Error retrieving waste: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        WasteDTOResponse response = this.mapper.domainToInfrastructure(waste);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<?> getWasteByProductId(@PathVariable String productId) {
-        List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByProductId(productId));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByProductId(productId));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensaje", "Error retrieving wastes by product: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/total-waste/{productId}")
     public ResponseEntity<?> getTotalWasteByProductId(@PathVariable String productId) {
-        double totalWaste = this.domain.getTotalWasteByProductId(productId);
-        return new ResponseEntity<>(totalWaste, HttpStatus.OK);
+        try {
+            double totalWaste = this.domain.getTotalWasteByProductId(productId);
+            return new ResponseEntity<>(totalWaste, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensaje", "Error calculating total waste: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @GetMapping("/suggestions/{wasteId}")
+    @GetMapping ("/suggestions/{wasteId}")
     public ResponseEntity<?> suggestReductionMeasures(@PathVariable String wasteId) {
-        String suggestions = this.domain.suggestReductionMeasures(wasteId);
-        return new ResponseEntity<>(suggestions, HttpStatus.OK);
+        try {
+            String suggestions = this.domain.suggestReductionMeasures(wasteId);
+            return new ResponseEntity<>(suggestions, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensaje", "Error getting reduction suggestions: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private Map<String, Object> catchErrors(BindingResult errors) {
