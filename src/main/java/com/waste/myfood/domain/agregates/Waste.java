@@ -11,10 +11,12 @@ import com.waste.myfood.domain.value_objects.QuantityWaste;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Waste {
     private String idWaste;
     private ProductWaste product;
@@ -28,14 +30,6 @@ public class Waste {
         this.quantityWaste = new QuantityWaste(initialQuantityWaste);
         this.cause = cause;
         this.dateRegister = new Date();
-    }
-
-    public Waste() {
-        this.idWaste = UUID.randomUUID().toString();  
-        this.product = new ProductWaste("", "", 0.0);  
-        this.quantityWaste = new QuantityWaste(0);  
-        this.cause = new CauseWaste();  
-        this.dateRegister = new Date();  
     }
 
    /**

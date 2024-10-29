@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 public class CauseWasteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "idCauseWaste", updatable = false, nullable = false)
+    @Column(name = "idCauseWaste")
     private String idCauseWaste;
 
-    @Column(name = "description", nullable = false, length = 255)
+    @Column(name = "description", length = 255)
     private String description;
 
 }

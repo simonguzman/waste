@@ -14,11 +14,11 @@ import lombok.Data;
 public class WasteDTORequest {
     @NotBlank(message = "You must provide the waste identifier.")
     private String idWaste;
-    @NotBlank(message = "You must provide the product associated with the waste.")
+    @NotNull(message = "You must provide the product associated with the waste.")
     private ProductWaste product;
-    @NotBlank(message = "You must provide the quantity of waste.")
+    @NotNull(message = "You must provide the quantity of waste.")
     private QuantityWaste quantityWaste;
-    @NotNull(message = "You must specify the cause of the waste.")
+    @NotNull(message = "You must provide the cause of waste.")
     private CauseWaste cause;
     private Date dateRegister; 
 }

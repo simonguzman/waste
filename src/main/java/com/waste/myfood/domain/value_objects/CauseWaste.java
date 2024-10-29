@@ -6,18 +6,16 @@ import com.waste.myfood.domain.constants.CauseWasteConstants;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class CauseWaste {
     private String id;
     private String description;
 
-    public CauseWaste(int causeIndex){
+    public CauseWaste(String description){
         this.id = UUID.randomUUID().toString();
-        this.description = selectCause(causeIndex);
+        this.description = description;
     }
 
     /**

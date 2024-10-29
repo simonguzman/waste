@@ -23,7 +23,7 @@ public class MapperWastePersistenceDomain {
     public Waste persistenceToDomain(WasteEntity entity) {
         ProductWaste product = new ProductWaste(entity.getProduct().getId(), entity.getProduct().getName(), entity.getProduct().getStock());
         QuantityWaste quantityWaste = new QuantityWaste(entity.getQuantityWaste().getWasteQuantity());
-        CauseWaste cause = new CauseWaste();
+        CauseWaste cause = new CauseWaste(entity.getCauseWaste().getIdCauseWaste(),entity.getCauseWaste().getDescription());
         return new Waste(entity.getIdWaste(), product, quantityWaste, cause, entity.getDateRegister());
     }
 
@@ -36,13 +36,13 @@ public class MapperWastePersistenceDomain {
         );
 
         QuantityWasteEntity quantityEntity = new QuantityWasteEntity(
-            null, // ID se generará automáticamente
+            domain.getQuantityWaste().getId(),
             domain.getQuantityWaste().getTotalWasteQuantity(),
             domain.getQuantityWaste().getTotalWasteQuantity()
         );
 
         CauseWasteEntity causeEntity = new CauseWasteEntity(
-            null, // ID se generará automáticamente
+            domain.getCause().getId(),
             domain.getCause().getDescription()
         );
 
