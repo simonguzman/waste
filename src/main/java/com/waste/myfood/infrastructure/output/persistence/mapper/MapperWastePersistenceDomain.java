@@ -2,6 +2,7 @@ package com.waste.myfood.infrastructure.output.persistence.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.waste.myfood.application.output.ExceptionFormatterIntPort;
 import com.waste.myfood.domain.agregates.Waste;
@@ -28,31 +29,66 @@ public class MapperWastePersistenceDomain {
     }
 
     public WasteEntity domainToPersistence(Waste domain) {
+        System.out.println("Convirtiendo Waste a WasteEntity: " + domain);
+        
+        // Log detallado de Product
+        System.out.println("Product details:");
+        System.out.println("- ID: " + domain.getProduct().getId());
+        System.out.println("- Name: " + domain.getProduct().getName());
+        System.out.println("- Category: " + domain.getProduct().getCategory());
+        System.out.println("- Stock: " + domain.getProduct().getStock());
+
         ProductWasteEntity productEntity = new ProductWasteEntity(
-            domain.getProduct().getId(),
+            domain.getProduct().getId() != null ? domain.getProduct().getId() : UUID.randomUUID().toString(),
             domain.getProduct().getName(),
             domain.getProduct().getCategory(),
             domain.getProduct().getStock()
         );
 
+        System.out.println("QuantityWaste details:");
+        System.out.println("- ID: " + domain.getQuantityWaste().getId());
+        System.out.println("- Quantity: " + domain.getQuantityWaste().getWasteQuantity());
+        System.out.println("- Total: " + domain.getQuantityWaste().getTotalWasteQuantity());
+
         QuantityWasteEntity quantityEntity = new QuantityWasteEntity(
-            domain.getQuantityWaste().getId(),
-            domain.getQuantityWaste().getTotalWasteQuantity(),
+            domain.getQuantityWaste().getId() != null ? domain.getQuantityWaste().getId() : UUID.randomUUID().toString(),
+            domain.getQuantityWaste().getWasteQuantity(),
             domain.getQuantityWaste().getTotalWasteQuantity()
         );
 
+        System.out.println("CauseWaste details:");
+        System.out.println("- ID: " + domain.getCause().getId());
+        System.out.println("- Description: " + domain.getCause().getDescription());
+
         CauseWasteEntity causeEntity = new CauseWasteEntity(
-            domain.getCause().getId(),
-            domain.getCause().getDescription()
+            domain.getCause().getId() != null ? domain.getCause().getId() : UUID.randomUUID().toString(),
+            domain.getCause().getDescription() != null ? domain.getCause().getDescription() : "Default Cause"
         );
 
-        return new WasteEntity(
+        System.out.println("Creando WasteEntity con causeWaste: " + causeEntity);
+
+        System.out.println("Entities created:");
+        System.out.println("- ProductEntity: " + productEntity);
+        System.out.println("- QuantityEntity: " + quantityEntity);
+        System.out.println("- CauseEntity: " + causeEntity);
+
+        WasteEntity wasteEntity = new WasteEntity(
             domain.getIdWaste(),
             productEntity,
             quantityEntity,
             causeEntity,
             domain.getDateRegister()
         );
+
+        System.out.println("WasteEntity creada: " + wasteEntity);
+        System.out.println("WasteEntity final state:");
+        System.out.println("- ID: " + wasteEntity.getIdWaste());
+        System.out.println("- Product: " + wasteEntity.getProduct());
+        System.out.println("- Quantity: " + wasteEntity.getQuantityWaste());
+        System.out.println("- Cause: " + wasteEntity.getCauseWaste());
+        System.out.println("- Date: " + wasteEntity.getDateRegister());
+        
+        return wasteEntity;
     }
 
     public List<Waste> persistenceToDomain(List<WasteEntity> entities) {

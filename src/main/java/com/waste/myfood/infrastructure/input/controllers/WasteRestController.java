@@ -44,8 +44,8 @@ public class WasteRestController {
         if (!errorResponse.isEmpty())
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 
-        if(request.getCause() == null){
-            errorResponse.put("mensaje", "Cause of waste cannot be null.");
+        if(request.getCause() == null || request.getCause().getDescription() == null) {
+            errorResponse.put("mensaje", "Cause and its description cannot be null.");
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
         
