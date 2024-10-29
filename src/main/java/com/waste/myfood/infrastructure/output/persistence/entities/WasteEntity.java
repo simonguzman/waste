@@ -37,7 +37,7 @@ public class WasteEntity {
     @JoinColumn(name = "quantityWaste_id", nullable = false)
     private QuantityWasteEntity quantityWaste;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "causeWaste_id", nullable = false)
     private CauseWasteEntity causeWaste;
 

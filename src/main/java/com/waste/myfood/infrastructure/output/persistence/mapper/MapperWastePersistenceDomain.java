@@ -36,13 +36,13 @@ public class MapperWastePersistenceDomain {
         );
 
         QuantityWasteEntity quantityEntity = new QuantityWasteEntity(
-            null,
+            null, // ID se generará automáticamente
             domain.getQuantityWaste().getTotalWasteQuantity(),
             domain.getQuantityWaste().getTotalWasteQuantity()
         );
 
         CauseWasteEntity causeEntity = new CauseWasteEntity(
-            null,
+            null, // ID se generará automáticamente
             domain.getCause().getDescription()
         );
 
@@ -57,17 +57,13 @@ public class MapperWastePersistenceDomain {
 
     public List<Waste> persistenceToDomain(List<WasteEntity> entities) {
         List<Waste> domainList = new ArrayList<>();
-        for (WasteEntity entity : entities) {
-            domainList.add(this.persistenceToDomain(entity));
-        }
+        entities.forEach(entity -> domainList.add(persistenceToDomain(entity)));
         return domainList;
     }
 
     public List<WasteEntity> domainToPersistence(List<Waste> wastes) {
         List<WasteEntity> entityList = new ArrayList<>();
-        for (Waste waste : wastes) {
-            entityList.add(this.domainToPersistence(waste));
-        }
+        wastes.forEach(waste -> entityList.add(domainToPersistence(waste)));
         return entityList;
     }
 
@@ -90,3 +86,4 @@ public class MapperWastePersistenceDomain {
         };
     }
 }
+

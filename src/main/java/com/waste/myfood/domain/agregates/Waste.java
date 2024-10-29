@@ -1,8 +1,6 @@
 package com.waste.myfood.domain.agregates;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import com.waste.myfood.domain.constants.CauseWasteConstants;

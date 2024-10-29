@@ -20,18 +20,12 @@ public class ManageWasteCUImplAdapter implements ManageWasteCUIntPort {
 
     @Override
     public Waste createWaste(Waste waste) {
-        if(!waste.isValidProduct())
-            this.formatter.returnResponseBusinessRuleViolated("Product can't be empty");
         if(waste.getProduct() == null)
-            this.formatter.returnResponseBusinessRuleViolated("Product can't be null.");
-        if(!waste.isValidQuantity())
-            this.formatter.returnResponseBusinessRuleViolated("Quantity can't be empty.");
+            this.formatter.returnResponseBusinessRuleViolated("Product can't be null or empty.");
         if(waste.getQuantityWaste() == null)
-            this.formatter.returnResponseBusinessRuleViolated("Quantity waste can't be null.");
-        if(!waste.isValidCause())
-            this.formatter.returnResponseBusinessRuleViolated("Cause can't be empty.");
+            this.formatter.returnResponseBusinessRuleViolated("Quantity waste can't be null or empty.");
         if(waste.getCause() == null)
-            this.formatter.returnResponseBusinessRuleViolated("Cause can't be null.");
+            this.formatter.returnResponseBusinessRuleViolated("Cause can't be null or empty.");
         return this.gateway.saveWaste(waste);
     }  
 

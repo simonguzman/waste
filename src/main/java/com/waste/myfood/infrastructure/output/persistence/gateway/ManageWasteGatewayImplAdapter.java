@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.waste.myfood.application.output.ManageWasteGatewayIntPort;
 import com.waste.myfood.domain.agregates.Waste;
-import com.waste.myfood.infrastructure.output.persistence.entities.CauseWasteEntity;
 import com.waste.myfood.infrastructure.output.persistence.entities.WasteEntity;
 import com.waste.myfood.infrastructure.output.persistence.repositories.WasteRepository;
 
@@ -54,10 +53,4 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
         List<WasteEntity> wasteEntities = serviceDB.findAllByCauseWaste_Description(cause);
         return mapper.map(wasteEntities, new TypeToken<List<Waste>>() {}.getType());
     }
-
-    //@Override
-    //public double calculateTotalWasteByProductId(String productId) {
-    //    return serviceDB.calculateTotalWasteByProduct_Id(productId);
-    //}*/
-    
 }
