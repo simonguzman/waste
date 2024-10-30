@@ -114,12 +114,16 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
         try {
             List<WasteEntity> wasteEntities = serviceDB.findAllByProduct_Id(productId);
             if (wasteEntities.isEmpty()) {
-                System.out.println("No waste records found for product id: " + productId);
+                System.out.println("No se encontraron registros de desperdicio para el producto ID: " + productId);
                 return new ArrayList<>();
             }
+            
+            // Ordenar por fecha de registro, del más reciente al más antiguo
+            wasteEntities.sort((w1, w2) -> w2.getDateRegister().compareTo(w1.getDateRegister()));
+            
             return mapper.persistenceToDomain(wasteEntities);
         } catch (Exception e) {
-            System.err.println("Error finding wastes by product id: " + e.getMessage());
+            System.err.println("Error buscando desperdicios por ID de producto: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }

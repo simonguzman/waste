@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,6 @@ import com.waste.myfood.infrastructure.input.dto.response.WasteDTOResponse;
 import com.waste.myfood.infrastructure.input.mappers.MapperWasteInfraestructureDomain;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = {"http://localhost:5050"})
@@ -151,12 +149,21 @@ public class WasteRestController {
         try {
             List<WasteDTOResponse> response = this.mapper.domainToInfrastructure(this.domain.getWasteByProductId(productId));
             if (response.isEmpty()) {
-                return new ResponseEntity<>("No se encontraron desperdicios para el producto con ID: " + productId, HttpStatus.NOT_FOUND);
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("mensaje", "No se encontraron desperdicios para el producto con ID: " + productId);
+                errorResponse.put("productId", productId);
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            
+            Map<String, Object> successResponse = new HashMap<>();
+            successResponse.put("productId", productId);
+            successResponse.put("totalRegistros", response.size());
+            successResponse.put("registros", response);
+            return new ResponseEntity<>(successResponse, HttpStatus.OK);
         } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("mensaje", "Error retrieving wastes by product: " + e.getMessage());
+            errorResponse.put("mensaje", "Error recuperando desperdicios: " + e.getMessage());
+            errorResponse.put("productId", productId);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -165,10 +172,20 @@ public class WasteRestController {
     public ResponseEntity<?> getTotalWasteByProductId(@PathVariable String productId) {
         try {
             double totalWaste = this.domain.getTotalWasteByProductId(productId);
-            return new ResponseEntity<>(totalWaste, HttpStatus.OK);
+            List<WasteDTOResponse> registros = this.mapper.domainToInfrastructure(
+                this.domain.getWasteByProductId(productId));
+                
+            Map<String, Object> response = new HashMap<>();
+            response.put("productId", productId);
+            response.put("totalDesperdicio", totalWaste);
+            response.put("cantidadRegistros", registros.size());
+            response.put("registrosDetallados", registros);
+            
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("mensaje", "Error calculating total waste: " + e.getMessage());
+            errorResponse.put("mensaje", "Error calculando total de desperdicios: " + e.getMessage());
+            errorResponse.put("productId", productId);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

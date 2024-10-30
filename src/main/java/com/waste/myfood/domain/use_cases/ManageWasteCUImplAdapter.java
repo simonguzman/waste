@@ -125,8 +125,10 @@ public class ManageWasteCUImplAdapter implements ManageWasteCUIntPort {
     public List<Waste> getWasteByProductId(String productId) {
         List<Waste> wastes = this.gateway.findByProductId(productId);
         if(wastes == null || wastes.isEmpty()) {
-            this.formatter.returnNoData("No waste records found for product id: " + productId);
+            this.formatter.returnNoData("No se encontraron registros de desperdicio para el producto ID: " + productId);
         }
+        // Ordenar por fecha de registro, del más reciente al más antiguo
+        wastes.sort((w1, w2) -> w2.getDateRegister().compareTo(w1.getDateRegister()));
         return wastes;
     }
 
@@ -134,10 +136,12 @@ public class ManageWasteCUImplAdapter implements ManageWasteCUIntPort {
     public double getTotalWasteByProductId(String productId) {
         List<Waste> wastes = this.gateway.findByProductId(productId);
         if (wastes == null || wastes.isEmpty()){
-            this.formatter.returnNoData("No waste records found for product id: " + productId);
+            this.formatter.returnNoData("No se encontraron registros de desperdicio para el producto ID: " + productId);
             return 0.0;
         }
-        return wastes.stream().mapToDouble(waste -> waste.getQuantityWaste().getWasteQuantity()).sum();
+        return wastes.stream()
+                    .mapToDouble(waste -> waste.getQuantityWaste().getTotalWasteQuantity())
+                    .sum();
     }
 
     @Override
