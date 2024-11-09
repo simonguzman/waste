@@ -29,7 +29,7 @@ import com.waste.myfood.infrastructure.input.mappers.MapperWasteInfraestructureD
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
-@CrossOrigin(origins = {"http://localhost:5050"})
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api/v1/wastes")
 @AllArgsConstructor
