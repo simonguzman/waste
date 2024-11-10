@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.waste.myfood.application.output.ExceptionFormatterIntPort;
+import com.waste.myfood.application.output.ManageCauseGatewayIntPort;
+import com.waste.myfood.application.output.ManageProductGatewayIntPort;
+import com.waste.myfood.application.output.ManageQuantityGatewayIntPort;
 import com.waste.myfood.application.output.ManageWasteGatewayIntPort;
 import com.waste.myfood.domain.use_cases.ManageWasteCUImplAdapter;
 import com.waste.myfood.infrastructure.input.mappers.MapperWasteInfraestructureDomain;
@@ -15,7 +18,7 @@ import com.waste.myfood.infrastructure.output.persistence.mapper.MapperWastePers
 @Configuration
 public class BeanConfiguration {
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
@@ -26,19 +29,20 @@ public class BeanConfiguration {
 
     @Bean
     public ManageWasteCUImplAdapter createWasteCUImplAdapter(ManageWasteGatewayIntPort gateway,
-            ExceptionFormatterIntPort exceptionFormatter){
-        return new ManageWasteCUImplAdapter(gateway, exceptionFormatter);
+            ExceptionFormatterIntPort exceptionFormatter, ManageProductGatewayIntPort productGateway,
+            ManageCauseGatewayIntPort causeGateway, ManageQuantityGatewayIntPort quantitygateway) {
+        return new ManageWasteCUImplAdapter(gateway, exceptionFormatter, productGateway, causeGateway, quantitygateway);
     }
 
     @Bean
     public MapperWasteInfraestructureDomain createMapperWasteInfrastructureDomain(
-            ExceptionFormatterIntPort exceptionFormatter){
+            ExceptionFormatterIntPort exceptionFormatter) {
         return new MapperWasteInfraestructureDomain(exceptionFormatter);
     }
 
     @Bean
     public MapperWastePersistenceDomain createMapperProductPersistenceDomain(
-            ExceptionFormatterIntPort exceptionFormatter){
+            ExceptionFormatterIntPort exceptionFormatter) {
         return new MapperWastePersistenceDomain(exceptionFormatter);
     }
 }

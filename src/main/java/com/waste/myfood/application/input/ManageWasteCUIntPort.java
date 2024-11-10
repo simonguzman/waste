@@ -3,6 +3,7 @@ package com.waste.myfood.application.input;
 import java.util.List;
 
 import com.waste.myfood.domain.agregates.Waste;
+import com.waste.myfood.domain.value_objects.ProductWaste;
 
 public interface ManageWasteCUIntPort {
     /**
@@ -16,8 +17,9 @@ public interface ManageWasteCUIntPort {
     /**
      * Actualiza la información de un registro de desperdicio existente.
      *
-     * @param waste El objeto Waste que contiene la nueva información. 
-     *              Este objeto debe tener un identificador válido que corresponda a un registro existente.
+     * @param waste El objeto Waste que contiene la nueva información.
+     *              Este objeto debe tener un identificador válido que corresponda a
+     *              un registro existente.
      * @return El objeto Waste actualizado, o null si la actualización falla.
      */
     Waste update(Waste waste);
@@ -25,7 +27,7 @@ public interface ManageWasteCUIntPort {
     /**
      * Registra una cantidad adicional de desperdicio para un registro existente.
      *
-     * @param wasteId Identificador del desperdicio a actualizar.
+     * @param wasteId  Identificador del desperdicio a actualizar.
      * @param quantity Cantidad de desperdicio a registrar.
      * @return El objeto Waste actualizado o null en caso de un error.
      */
@@ -34,16 +36,21 @@ public interface ManageWasteCUIntPort {
     /**
      * Recupera todos los registros de desperdicio.
      *
-     * @return Una lista de objetos Waste o una lista vacía si no hay desperdicio registrado.
+     * @return Una lista de objetos Waste o una lista vacía si no hay desperdicio
+     *         registrado.
      */
     List<Waste> getAllWastes();
 
     /**
-     * Recupera todos los registros de desperdicio relacionados con una causa específica.
+     * Recupera todos los registros de desperdicio relacionados con una causa
+     * específica.
      *
-     * @param cause La causa de desperdicio para la cual se desean obtener los registros.
-     * @return Una lista de objetos Waste que representan los registros de desperdicio 
-     *         asociados con la causa especificada. Si no hay registros, se devuelve una lista vacía.
+     * @param cause La causa de desperdicio para la cual se desean obtener los
+     *              registros.
+     * @return Una lista de objetos Waste que representan los registros de
+     *         desperdicio
+     *         asociados con la causa especificada. Si no hay registros, se devuelve
+     *         una lista vacía.
      */
     List<Waste> getWasteByCause(String cause);
 
@@ -56,19 +63,26 @@ public interface ManageWasteCUIntPort {
     Waste getWasteById(String wasteId);
 
     /**
-     * Recupera todos los registros de desperdicio relacionados con un producto específico.
+     * Recupera todos los registros de desperdicio relacionados con un producto
+     * específico.
      *
-     * @param productId Identificador del producto para el cual se desean obtener los registros de desperdicio.
-     * @return Una lista de objetos Waste que representan los registros de desperdicio 
-     *         relacionados con el producto especificado. Si no hay registros, se devuelve una lista vacía.
+     * @param productId Identificador del producto para el cual se desean obtener
+     *                  los registros de desperdicio.
+     * @return Una lista de objetos Waste que representan los registros de
+     *         desperdicio
+     *         relacionados con el producto especificado. Si no hay registros, se
+     *         devuelve una lista vacía.
      */
     List<Waste> getWasteByProductId(String productId);
 
     /**
-     * Calcula la cantidad total de desperdicio registrada para un producto específico.
+     * Calcula la cantidad total de desperdicio registrada para un producto
+     * específico.
      *
-     * @param productId Identificador del producto para el cual se desea calcular la cantidad total de desperdicio.
-     * @return La cantidad total de desperdicio registrada para el producto especificado. 
+     * @param productId Identificador del producto para el cual se desea calcular la
+     *                  cantidad total de desperdicio.
+     * @return La cantidad total de desperdicio registrada para el producto
+     *         especificado.
      *         Si no hay desperdicio registrado, se devuelve 0.
      */
     double getTotalWasteByProductId(String productId);
@@ -76,8 +90,18 @@ public interface ManageWasteCUIntPort {
     /**
      * Sugiere medidas de reducción de desperdicio para un registro específico.
      *
-     * @param wasteId Identificador del desperdicio para el cual se desean sugerencias.
+     * @param wasteId Identificador del desperdicio para el cual se desean
+     *                sugerencias.
      * @return Sugerencias de reducción de desperdicio como una cadena.
      */
     String suggestReductionMeasures(String wasteId);
+
+    /**
+     * Servicio que recibe una lista de productos expirados y los agrega al
+     * desperdicio.
+     * 
+     * @param expired Productos expirados
+     * @return {@code Lista de productos} con el resultado de la operación.
+     */
+    List<Waste> registerExpired(List<ProductWaste> expired);
 }

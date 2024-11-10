@@ -18,13 +18,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
+public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort {
 
     private final WasteRepository serviceDB;
     private final MapperWastePersistenceDomain mapper;
     private final EntityManager entityManager;
 
-    public ManageWasteGatewayImplAdapter(WasteRepository serviceDB, MapperWastePersistenceDomain mapper, EntityManager entityManager){
+    public ManageWasteGatewayImplAdapter(WasteRepository serviceDB, MapperWastePersistenceDomain mapper,
+            EntityManager entityManager) {
         this.serviceDB = serviceDB;
         this.mapper = mapper;
         this.entityManager = entityManager;
@@ -37,7 +38,7 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
             // Verifica si es una actualización buscando el waste existente
             WasteEntity existingWaste = entityManager.find(WasteEntity.class, waste.getIdWaste());
             boolean isUpdate = (existingWaste != null);
-    
+
             // Si es una actualización, usa las entidades existentes
             if (isUpdate) {
                 // Actualiza el producto existente
@@ -45,19 +46,19 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
                 productEntity.setName(waste.getProduct().getName());
                 productEntity.setCategory(waste.getProduct().getCategory());
                 productEntity.setStock(waste.getProduct().getStock());
-    
+
                 // Actualiza la cantidad existente
                 QuantityWasteEntity quantityEntity = existingWaste.getQuantityWaste();
                 quantityEntity.setWasteQuantity(waste.getQuantityWaste().getWasteQuantity());
                 quantityEntity.setTotalWasteQuantity(waste.getQuantityWaste().getTotalWasteQuantity());
-    
+
                 // Actualiza la causa existente
                 CauseWasteEntity causeEntity = existingWaste.getCauseWaste();
                 causeEntity.setDescription(waste.getCause().getDescription());
-    
+
                 // Actualiza el waste
                 existingWaste.setDateRegister(waste.getDateRegister());
-                
+
                 return mapper.persistenceToDomain(serviceDB.save(existingWaste));
             } else {
                 // Si es una creación nueva, usa el código existente
@@ -67,25 +68,25 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
                 productEntity.setCategory(waste.getProduct().getCategory());
                 productEntity.setStock(waste.getProduct().getStock());
                 entityManager.persist(productEntity);
-    
+
                 QuantityWasteEntity quantityEntity = new QuantityWasteEntity();
                 quantityEntity.setIdQuantityWaste(waste.getQuantityWaste().getId());
                 quantityEntity.setWasteQuantity(waste.getQuantityWaste().getWasteQuantity());
                 quantityEntity.setTotalWasteQuantity(waste.getQuantityWaste().getTotalWasteQuantity());
                 entityManager.persist(quantityEntity);
-    
+
                 CauseWasteEntity causeEntity = new CauseWasteEntity();
                 causeEntity.setIdCauseWaste(waste.getCause().getId());
                 causeEntity.setDescription(waste.getCause().getDescription());
                 entityManager.persist(causeEntity);
-    
+
                 WasteEntity wasteEntity = new WasteEntity();
                 wasteEntity.setIdWaste(waste.getIdWaste());
                 wasteEntity.setProduct(productEntity);
                 wasteEntity.setQuantityWaste(quantityEntity);
                 wasteEntity.setCauseWaste(causeEntity);
                 wasteEntity.setDateRegister(waste.getDateRegister());
-    
+
                 return mapper.persistenceToDomain(serviceDB.save(wasteEntity));
             }
         } catch (Exception e) {
@@ -94,7 +95,6 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
             return null;
         }
     }
-
 
     @Override
     public List<Waste> findAll() {
@@ -117,10 +117,10 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
                 System.out.println("No se encontraron registros de desperdicio para el producto ID: " + productId);
                 return new ArrayList<>();
             }
-            
+
             // Ordenar por fecha de registro, del más reciente al más antiguo
             wasteEntities.sort((w1, w2) -> w2.getDateRegister().compareTo(w1.getDateRegister()));
-            
+
             return mapper.persistenceToDomain(wasteEntities);
         } catch (Exception e) {
             System.err.println("Error buscando desperdicios por ID de producto: " + e.getMessage());
@@ -135,5 +135,9 @@ public class ManageWasteGatewayImplAdapter implements ManageWasteGatewayIntPort{
         return mapper.persistenceToDomain(wasteEntities);
     }
 
-    
+    @Override
+    public List<Waste> saveAll(List<Waste> wastes) {
+        return this.mapper.persistenceToDomain(this.serviceDB.saveAll(this.mapper.domainToPersistence(wastes)));
+    }
+
 }

@@ -2,10 +2,12 @@ package com.waste.myfood.domain.value_objects;
 
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class QuantityWaste {
     private String id;
@@ -22,7 +24,8 @@ public class QuantityWaste {
      * Agrega una cantidad de desperdicio a la cantidad total registrada.
      *
      * @param quantity La cantidad de desperdicio a agregar.
-     * @return true si la cantidad fue agregada correctamente, false si la cantidad es menor o igual a cero.
+     * @return true si la cantidad fue agregada correctamente, false si la cantidad
+     *         es menor o igual a cero.
      */
     public boolean addQuantity(double quantity) {
         if (quantity <= 0)
@@ -35,7 +38,8 @@ public class QuantityWaste {
     /**
      * Valida si la cantidad de desperdicio inicial es positiva.
      *
-     * @return true si la cantidad de desperdicio es mayor que cero, false en caso contrario.
+     * @return true si la cantidad de desperdicio es mayor que cero, false en caso
+     *         contrario.
      */
     public boolean validatePositive() {
         return this.wasteQuantity > 0;
@@ -46,7 +50,7 @@ public class QuantityWaste {
      *
      * @param quantity La cantidad de desperdicio a reducir.
      * @return true si la reducción fue exitosa, false si la cantidad es negativa
-     * o si la cantidad total resultante sería negativa.
+     *         o si la cantidad total resultante sería negativa.
      */
     public boolean reduceQuantity(double quantity) {
         if (quantity < 0 || this.totalWasteQuantity - quantity < 0) {
@@ -59,7 +63,8 @@ public class QuantityWaste {
     /**
      * Verifica si la cantidad total de desperdicio registrada es positiva.
      *
-     * @return true si la cantidad total de desperdicio es mayor que cero, false en caso contrario.
+     * @return true si la cantidad total de desperdicio es mayor que cero, false en
+     *         caso contrario.
      */
     public boolean isPositive() {
         return this.totalWasteQuantity > 0;

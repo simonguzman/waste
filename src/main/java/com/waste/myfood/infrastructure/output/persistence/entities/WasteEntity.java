@@ -25,7 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class WasteEntity {
-    
+
     @Id
     @Column(name = "idWaste", updatable = false, nullable = false)
     private String idWaste;
@@ -39,12 +39,11 @@ public class WasteEntity {
     private QuantityWasteEntity quantityWaste;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "causeWaste_id")
+    @JoinColumn(name = "causeWaste_id", nullable = false)
     private CauseWasteEntity causeWaste;
 
     @Column(name = "dateRegister", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateRegister;
 
-    
 }
